@@ -64,7 +64,7 @@ export default function Hero() {
             pad="px-5 py-3 sm:px-6"
             className="mt-6 w-full max-w-full min-[481px]:w-fit"
           >
-            <p className="font-body text-[17px] font-semibold leading-[1.45] text-tinta">
+            <p className="balanced-copy font-body text-[17px] font-semibold leading-[1.45] text-tinta">
               {t('hero.subtitle')}
             </p>
           </CloudBlob>

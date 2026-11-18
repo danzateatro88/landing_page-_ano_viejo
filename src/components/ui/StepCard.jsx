@@ -78,7 +78,7 @@ export default function StepCard({ index = 0, className = '' }) {
           <h3 className="font-display text-[clamp(1.35rem,5.4vw,1.6rem)] font-bold leading-tight text-tinta">
             {t(titleKey)}
           </h3>
-          <p className="copy mt-2 text-[20px] leading-[1.35] text-tinta md:text-[21px]">
+          <p className="copy narrative-copy mt-2 text-[20px] leading-[1.35] text-tinta md:text-[21px]">
             {t(lineKey)}
           </p>
         </div>

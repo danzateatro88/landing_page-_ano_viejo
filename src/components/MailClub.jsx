@@ -42,7 +42,7 @@ export default function MailClub({ className = '' }) {
           {t('mailclub.title')}
         </h3>
 
-        <p className="copy mt-3 text-[20px] leading-[1.45] text-tinta">
+        <p className="copy narrative-copy mt-3 text-[20px] leading-[1.45] text-tinta">
           {t('mailclub.body')}
         </p>
 

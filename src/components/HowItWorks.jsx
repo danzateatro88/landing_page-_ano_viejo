@@ -37,7 +37,7 @@ export default function HowItWorks() {
     <section
       id="como-funciona"
       aria-labelledby="como-funciona-title"
-      className="paper-dots relative bg-crema"
+      className="paper-dots relative overflow-x-clip bg-crema"
     >
       <div className="mx-auto w-full max-w-[1200px] px-5 py-14 sm:px-8 md:py-20 lg:px-12 lg:py-[104px]">
         <div className="relative mx-auto w-fit max-w-full px-4 text-center">

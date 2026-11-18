@@ -8,7 +8,7 @@
  *   es la silueta desplazada hacia fuera, de modo que los bucles abrazan la nube
  *   sin esquinas descuadradas.
  * - El contenedor reserva un anillo calculado con `frameInset` a partir del
- *   tamaño REAL del contenido (ResizeObserver): el mismo que dibuja el marco.
+ *   ancho exterior: no depende de la altura ni del contenido que ese anillo rodea.
  *   Así el trazo nunca pisa el texto, ni en una tarjeta de 150 px ni en un panel
  *   de 600 px (el anillo se adapta, no hay un valor fijo que se rompa).
  * - Sin sombra difusa: nada de SaaS. Decorativo → `aria-hidden` en el SVG.
@@ -58,20 +58,19 @@ export default function CloudBlob({
   className = '',
   as: Tag = 'div',
 }) {
-  const contentRef = useRef(null)
-  const [minSide, setMinSide] = useState(0)
+  const containerRef = useRef(null)
+  const [width, setWidth] = useState(0)
 
   const isPill = variant === 'pill'
   const loop = frameLoop ?? (isPill ? 11 : 16)
   const strokeWidth = isPill ? 2.6 : 3.9
 
   useIsomorphicLayoutEffect(() => {
-    const node = contentRef.current
+    const node = containerRef.current
     if (!node) return undefined
     const read = () => {
-      const rect = node.getBoundingClientRect()
-      const next = Math.round(Math.min(rect.width, rect.height))
-      setMinSide((previous) => (Math.abs(previous - next) < 1 ? previous : next))
+      const next = node.getBoundingClientRect().width
+      setWidth((previous) => (Math.abs(previous - next) < 0.5 ? previous : next))
     }
     read()
     if (typeof ResizeObserver === 'undefined') return undefined
@@ -80,9 +79,8 @@ export default function CloudBlob({
     return () => observer.disconnect()
   }, [])
 
-  // El marco se mide sobre el contenedor completo (contenido + anillo): se reserva
-  // un 25 % de holgura para que el anillo dibujado quepa siempre dentro del reservado.
-  const ring = isPill || !frame ? 0 : frameInset({ loop, minSide: minSide * 1.25, strokeWidth })
+  // El ancho exterior limita por arriba el lado menor usado para dibujar el marco.
+  const ring = isPill || !frame ? 0 : frameInset({ loop, minSide: width, strokeWidth })
 
   // Silueta de papel: los mismos radios de la nube desplazados por el anillo, para
   // que el relleno llegue exactamente al trazo (marco sobre papel).
@@ -93,7 +91,7 @@ export default function CloudBlob({
   }
 
   return (
-    <Tag className={`relative ${className}`}>
+    <Tag ref={containerRef} className={`relative ${className}`}>
       {ring && paperFill ? (
         <span
           aria-hidden="true"
@@ -103,7 +101,6 @@ export default function CloudBlob({
       ) : null}
       <div style={ring ? { padding: `${ring}px` } : undefined}>
         <div
-          ref={contentRef}
           className={`relative ${TONES[tone] ?? TONES.crema} ${pad}`}
           style={{ borderRadius: isPill ? 'var(--radius-pill)' : CLOUD_BORDER }}
         >

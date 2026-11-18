@@ -91,11 +91,11 @@ export default function KitCard({ index = 0, className = '' }) {
         />
       </div>
 
-      <div className="pt-1 sm:pt-1.5">
+      <div className="pt-1 text-center sm:pt-1.5">
         <h3 className="font-display text-[clamp(0.9rem,3.7vw,1.2rem)] font-bold leading-[1.1] text-tinta">
           {t(titleKey)}
         </h3>
-        <p className="copy mt-1 text-[15.5px] leading-[1.2] text-tinta sm:mt-1.5 sm:text-[18px] sm:leading-[1.3]">
+        <p className="copy balanced-copy mt-1 text-[15.5px] leading-[1.2] text-tinta sm:mt-1.5 sm:text-[18px] sm:leading-[1.3]">
           {t(lineKey)}
         </p>
       </div>

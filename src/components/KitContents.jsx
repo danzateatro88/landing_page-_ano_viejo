@@ -95,7 +95,7 @@ export default function KitContents() {
     <section
       id="kit"
       aria-labelledby="kit-title"
-      className="paper-dots-light relative bg-petroleo"
+      className="paper-dots-light relative overflow-x-clip bg-petroleo"
     >
       <div className="mx-auto w-full max-w-[1280px] px-5 py-14 sm:px-8 md:py-20 lg:px-6 lg:py-[112px]">
         {/* H2 sobre petróleo: único texto fuera de nube, y a tamaño AA-large. */}

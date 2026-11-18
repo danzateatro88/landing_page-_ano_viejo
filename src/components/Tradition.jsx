@@ -29,7 +29,7 @@ export default function Tradition() {
     <section
       id="tradicion"
       aria-labelledby="tradicion-title"
-      className="paper-dots relative bg-crema"
+      className="paper-dots relative overflow-x-clip bg-crema"
     >
       <div className="mx-auto w-full max-w-[1200px] px-5 py-14 sm:px-8 md:py-20 lg:px-12 lg:py-[128px]">
         <div className="relative mx-auto w-fit max-w-full">
@@ -62,7 +62,7 @@ export default function Tradition() {
             pad="px-4 py-6 sm:px-9 sm:py-8"
             frameLoop={19}
           >
-            <p className="copy mx-auto max-w-[54ch] text-[21px] leading-[1.55] text-tinta md:text-[24px]">
+            <p className="copy narrative-copy mx-auto max-w-[54ch] text-[21px] leading-[1.55] text-tinta md:text-[24px]">
               {t('tradition.body')}
             </p>
           </CloudBlob>

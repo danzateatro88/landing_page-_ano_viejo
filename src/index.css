@@ -69,7 +69,7 @@
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   h1,
@@ -172,6 +172,17 @@
     letter-spacing: 0.005em;
     font-variant-ligatures: common-ligatures;
     text-wrap: pretty;
+  }
+
+  .narrative-copy {
+    text-align: justify;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  .balanced-copy {
+    text-align: center;
+    text-wrap: balance;
   }
 
   .btn-primary {

@@ -60,10 +60,10 @@ export default function MakerStory({ className = '' }) {
           className="paper-dots mt-5 bg-crema px-5 py-5 text-tinta shadow-[5px_5px_0_0_#134E35] sm:px-6 sm:py-6"
           style={CARD_RADII}
         >
-          <p className="copy text-[21px] leading-[1.4] text-tinta">
+          <p className="copy narrative-copy text-[21px] leading-[1.4] text-tinta">
             {t('victoria.line1')}
           </p>
-          <p className="copy mt-2 text-[21px] leading-[1.4] text-tinta">
+          <p className="copy narrative-copy mt-2 text-[21px] leading-[1.4] text-tinta">
             {t('victoria.line2')}
           </p>
 
