@@ -1,0 +1,33 @@
+# Dependencias
+node_modules/
+server/node_modules/
+
+# Build
+dist/
+dist-ssr/
+*.local
+
+# Entorno
+.env
+.env.*
+server/.env
+
+# Editor / sistema
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Temporales de trabajo (no se publican)
+.tmp/
+
+# Vercel
+.vercel
+.env.local
+.env.*.local

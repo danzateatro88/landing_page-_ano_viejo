@@ -1,0 +1,216 @@
+@import 'tailwindcss';
+
+/* =============================================================================
+   TOKENS — sistema artesanal «Vichito, el año viejo»
+   Configuración CSS-first de Tailwind v4 (no hay tailwind.config.js).
+   Paleta cerrada: los 7 colores del encargo. Nada de rosa, nada de degradados.
+   ============================================================================= */
+@theme {
+  /* Paleta exacta (encargo §3) */
+  --color-petroleo: #1b7a63;
+  --color-terracota: #f04e0c;
+  --color-crema: #f4e2cd;
+  --color-tinta: #134e35;
+  --color-rojo: #b93a30;
+  --color-mostaza: #e3c93c;
+  --color-oliva: #50664b;
+
+  /* Tipografías: Baloo 2 / Nunito / EB Garamond (index.html, display=swap) */
+  --font-display: 'Baloo 2', 'Trebuchet MS', ui-rounded, system-ui, sans-serif;
+  --font-body: 'Nunito', 'Helvetica Neue', Arial, sans-serif;
+  --font-serif: 'EB Garamond', Georgia, 'Times New Roman', serif;
+  /* Tipografía de los TEXTOS narrativos (párrafos, líneas del kit, pasos,
+     historia de Victoria). Se cambia SOLO aquí si algún día se licencia una
+     tipografía manuscrita: ver `--font-copy`. */
+  --font-copy: 'Caveat', 'EB Garamond', 'Bradley Hand', cursive;
+
+  /* Formas */
+  --radius-pill: 999px;
+  --radius-cloud: 28px;
+
+  /* Sombra dura tipo sticker (nunca difusa: no es SaaS) */
+  --shadow-sticker: 3px 3px 0 0 var(--color-tinta);
+  --shadow-sticker-sm: 2px 2px 0 0 var(--color-tinta);
+
+  /* Ritmo vertical de sección */
+  --spacing-section: 3.5rem;
+  --spacing-section-md: 5.5rem;
+  --spacing-section-lg: 7rem;
+
+  /* Trazo de garabato */
+  --stroke-hand: 3.5px;
+}
+
+/* Decisiones de marca expuestas como variables inspeccionables en el DOM.
+   D-CTA: `--btn-ink` vale crema por defecto (deuda declarada 2,86:1).
+   Alterno documentado: `#134E35` (tinta sobre terracota = 2,67:1: ya NO mejora la
+   legibilidad, así que la deuda se queda en 2,86:1 con etiqueta crema). */
+:root {
+  --btn-ink: #f4e2cd;
+  --squiggle-stroke: #f04e0c;
+}
+
+/* =============================================================================
+   BASE
+   ============================================================================= */
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-petroleo);
+    color: var(--color-tinta);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.05;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Con el navbar sticky, los anclajes no quedan tapados. */
+  [id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  ::selection {
+    background-color: var(--color-mostaza);
+    color: var(--color-tinta);
+  }
+
+  /* Foco visible de 3 px, doble tono: anillo de tinta verde + halo mostaza.
+     Sobre crema manda la tinta (7,66:1); sobre petróleo manda el halo mostaza
+     (3,16:1) porque la tinta sobre petróleo solo llega a 1,85:1. Un solo
+     elemento visible en cualquier superficie, sin clases por contexto.
+     Prohibido `outline: none` en cualquier control. */
+  :focus-visible {
+    outline: 3px solid var(--color-tinta);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px var(--color-mostaza);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* =============================================================================
+   UTILIDADES ARTESANALES
+   ============================================================================= */
+
+/* Textura de papel: trama de puntos CSS al ~4,5 % de tinta verde.
+   Cero peticiones, cero binarios (D-R2 / V12 del CRO: asset real es opcional). */
+@utility paper-dots {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(19,78,53, 0.045) 1px,
+    transparent 0
+  );
+  background-size: 6px 6px;
+}
+
+/* Trama más clara para zonas de petróleo (la tinta se lee peor sobre oscuro). */
+@utility paper-dots-light {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(244, 226, 205, 0.05) 1px,
+    transparent 0
+  );
+  background-size: 6px 6px;
+}
+
+/* =============================================================================
+   CTA PRIMARIO — condición C1 del acta
+   Keyline de tinta verde 2 px + halo crema 3 px, reales en el CSS y visibles en el DOM
+   (box-shadow inspeccionable). Etiqueta con `--btn-ink` (crema por defecto).
+   ============================================================================= */
+@layer components {
+  /* =============================================================================
+     `.copy` — la tipografía de los textos de la página.
+     Decisión de Victoria (16 nov 2026): la itálica elegante del boceto no era un
+     eslogan ni un adorno de una palabra, era la letra de los textos. Así que los
+     párrafos y las líneas narrativas la usan; los elementos funcionales (botones,
+     envíos, teléfono, etiquetas) siguen en Nunito por legibilidad.
+     Para pasar a una manuscrita licenciada basta cambiar `--font-copy` y, si hace
+     falta, `font-style: normal` aquí. Nada más.
+     ============================================================================= */
+  .copy {
+    font-family: var(--font-copy);
+    /* Caveat ya es manuscrita: no se inclina a mano (sería un oblicuo falso). */
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: 0.005em;
+    font-variant-ligatures: common-ligatures;
+    text-wrap: pretty;
+  }
+
+  .btn-primary {
+    background-color: var(--color-terracota);
+    color: var(--btn-ink);
+    box-shadow:
+      0 0 0 2px var(--color-tinta),
+      0 0 0 5px var(--color-crema),
+      0 3px 0 2px var(--color-tinta);
+    transition:
+      transform 160ms ease,
+      box-shadow 160ms ease;
+  }
+
+  .btn-primary:hover {
+    transform: rotate(-1.5deg) translateY(-1px);
+    box-shadow:
+      0 0 0 2px var(--color-tinta),
+      0 0 0 5px var(--color-crema),
+      0 5px 0 2px var(--color-tinta);
+  }
+
+  .btn-primary:active {
+    transform: translateY(2px);
+    box-shadow:
+      0 0 0 2px var(--color-tinta),
+      0 0 0 5px var(--color-crema),
+      0 1px 0 2px var(--color-tinta);
+  }
+
+  /* CTA primario: conserva el keyline + halo de C1 y añade el anillo de foco
+     doble (mostaza fuera, tinta en el borde del anillo) sin perder C1. */
+  .btn-primary:focus-visible {
+    outline: 3px solid var(--color-tinta);
+    outline-offset: 8px;
+    box-shadow:
+      0 0 0 2px var(--color-tinta),
+      0 0 0 5px var(--color-crema),
+      0 0 0 8px var(--color-mostaza),
+      0 3px 0 2px var(--color-tinta);
+  }
+}

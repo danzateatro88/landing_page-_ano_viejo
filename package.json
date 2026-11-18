@@ -1,0 +1,27 @@
+{
+  "name": "vichito-ano-viejo",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Landing «Vichito, el año viejo» — Kit Ritual Año Viejo 2026 de vichisboh*. Hecha a mano en Montreal.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check:copy": "node scripts/check-copy.mjs",
+    "check:console": "node scripts/check-console.mjs",
+    "clean": "node -e \"import('node:fs').then(fs=>fs.rmSync('dist',{recursive:true,force:true}))\"",
+    "api": "node scripts/dev-api.mjs"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "stripe": "^16.12.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "tailwindcss": "^4.1.0",
+    "vite": "^7.0.0"
+  }
+}
